@@ -1,0 +1,42 @@
+{% extends 'forums/post_base.html' %}
+{% load static %}
+{% block content %}
+  <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }}) </h1>
+  {% for post in posts %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <a class="mr-2" href="{% url 'user-posts' post.starter.username %}">@{{ post.starter }}</a>
+          <small class="text-muted">Created on: {{ post.last_updated|date:"F d, Y" }}</small>
+        </div>
+        <h2><a class="article-title" href="/forums/{{ post.board.name }}/{{ post.id }}">{{ post.subject }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+      </div>
+    </article>
+  {% endfor %}
+
+
+  {% if is_paginated %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">&laquo; First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+  {% endif %}
+{% endblock content %}
