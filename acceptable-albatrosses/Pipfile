@@ -14,7 +14,7 @@ pylint-django = "*"
 
 [packages]
 psycopg2 = "~=2.8"
-Django = "~=3.0"
+Django = "~=3.0.0"
 
 [pipenv]
 allow_prereleases = true
