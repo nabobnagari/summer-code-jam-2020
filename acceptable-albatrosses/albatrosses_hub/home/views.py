@@ -7,8 +7,8 @@ def homepage(request):
 
     return render(request, "home.html")
 
-def aboutus(request):
+def about_us(request):
     """ Views to render the About Us page. """
     template = "about.html"
-    context = aboutus
+    context = about_us
     return render(request, template)
